@@ -1,0 +1,33 @@
+services:
+  ml-service:
+    # this user command below is really important!!!
+    # it is used in the bind mount to have the same permissions in the container as the
+    # user on the host machine. This is done by mapping the uid:gid of the user to container. 
+    # if you do not know these uid or gid use `id -u` id-g` (or use ${shell id -u} in the make file)
+    user: "${USER_ID:-1000}"
+    hostname: "${HOST_NAME:-sacha}"
+    container_name: ml-trainer-container
+    image: ml-template  # name of image created by using `docker compose build`
+    build:
+      context: .    # location of the docker-compose.yaml file
+      dockerfile: ./docker/Dockerfile
+      args: 
+        USER_NAME: "${USER_NAME:-sacha}"
+        USER_ID: "${USER_ID:-1000}"
+    volumes:
+      #- ml-app-data:/app/
+      - ./:/app/
+      # since we try to use s3 for storage we need access to the user credentials
+      # create a user with programmatic access, give the user the correct s3 permission
+      # configure the aws cli. Test if `aws s3 ls` works with no errors
+      - ~/.aws/:/home/${USER_NAME}/.aws/
+      # Here we keep the ssh key to autenticate to github
+      - ~/.ssh/:/home/${USER_NAME}/.ssh/
+    ports:
+      - 8080:8080
+    init: true
+    ipc: host
+
+
+#volumes:
+#  ml-app-data:
