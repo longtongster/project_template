@@ -3,8 +3,8 @@ from pathlib import Path
 from utils.data_utils import get_logger, initialize_dvc, initialize_dvc_storage, make_new_data_version
 
 dvc_remote_name = "s3-storage"
-dvc_remote_url = "s3://dvc-test-svw-2"
-#dvc_remote_url = "s3://dvc-test-svw/datasets"
+#dvc_remote_url = "s3://dvc-test-svw-2"
+dvc_remote_url = "s3://dvc-test-svw/datasets"
 dvc_raw_data_folder = "data/raw"
 
 
