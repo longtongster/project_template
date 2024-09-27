@@ -1,0 +1,11 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  MyBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: dvc-test-svw
+      Key: datasets
+Outputs:
+  BucketName:
+    Description: "The name of the S3 bucket"
+    Value: !Ref MyBucket
