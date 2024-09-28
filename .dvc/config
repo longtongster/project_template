@@ -1,6 +1,0 @@
-[core]
-    analytics = false
-    autostage = true
-    remote = s3-storage
-['remote "s3-storage"']
-    url = s3://dvc-test-svw/datasets
